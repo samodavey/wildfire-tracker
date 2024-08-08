@@ -3,16 +3,23 @@ import LocationMarker from "./LocationMarker";
 
 //Unable to restrict to env due to costs, hence visible API key
 // process.env.GOOGLE_MAPS_API_KEY 
+//RESOLVE ICONS NOT STAYING IN PLACE!
+const Map = ({ eventData, center, zoom }) => {
 
-const Map = ({ center, zoom }) => {
+  const markers = eventData.map((ev, index) => {
+    if(ev.categories[0].id === 8){
+      return  <LocationMarker key={index} lat={ev.geometries[0].coordinates[1]} lng={ev.geometries[0].coordinates[0]}/>
+    }
+    return null
+  })
   return (
     <div className="map">
       <GoogleMapReact
         bootstrapURLKeys={{ key: 'AIzaSyAmhuIe8ndd8k8eAqTsIijr_IaSp3Zof_U'}}
-        defaultCenter={center}
-        defaultZoom={zoom}
+        defaultCenter={ center }
+        defaultZoom={ zoom }
       >
-        <LocationMarker lat={center.lat} lng={center.lng}/>
+        {markers}
       </GoogleMapReact>
     </div>
   );
@@ -20,10 +27,10 @@ const Map = ({ center, zoom }) => {
 
 Map.defaultProps = {
   center: {
-    lat: 50.5462,
-    lng: -3.4973
+    lat: -37.6343,
+    lng: 145.0605
   },
-  zoom: 16
+  zoom: 4
 }
 
 export default Map;
